@@ -1,222 +1,148 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Lock, ArrowLeft, AlertCircle, CheckCircle, RefreshCcw } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, Mail, Lock, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export default function LoginPage() {
+  const router = useRouter();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  
-  // Security State
-  const [failedAttempts, setFailedAttempts] = useState(0);
-  const [isLocked, setIsLocked] = useState(false);
-  
-  // UI State
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [showRecaptcha, setShowRecaptcha] = useState(false);
 
-  // INSTITUTIONAL ERROR COPY
-  const ERR_INCORRECT = "The credentials entered do not match our records.";
-  const ERR_LOCKED = "Your account has been temporarily restricted due to multiple unsuccessful attempts.";
-  const MSG_RESET_SUCCESS = "A secure reset link has been sent to your registered email.";
-
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    setErrorMessage('');
-    setSuccessMessage('');
-
-    // Block login if account is locked (3+ failed attempts)
-    if (isLocked || failedAttempts >= 3) {
-      setErrorMessage(ERR_LOCKED);
-      setShowRecaptcha(true);
-      return;
-    }
-
     setIsLoading(true);
-
-    // Simulate network request & backend validation
+    
+    // Simulate an API authentication call
     setTimeout(() => {
       setIsLoading(false);
-
-      // MOCK BACKEND LOGIC: Replace with actual JWT authentication & bcrypt validation
-      if (email === 'demo@syndexus.com' && password === 'admin123') {
-        // SUCCESS: 
-        // FUTURE BACKEND INTEGRATION:
-        // 1. Generate & store JWT in HTTP-only cookie
-        // 2. Log audit event: { event: "login_success", user: email, timestamp: Date.now() }
-        // 3. Check Org-based tenant isolation & Multi-role routing
-        window.location.href = '/dashboard'; // Redirect to mock dashboard
-      } else {
-        // FAILURE:
-        const newAttempts = failedAttempts + 1;
-        setFailedAttempts(newAttempts);
-        
-        // Log audit event: { event: "login_failed", user: email, timestamp: Date.now() }
-        
-        if (newAttempts >= 3) {
-          setIsLocked(true);
-          setErrorMessage(ERR_LOCKED);
-          setShowRecaptcha(true);
-        } else {
-          setErrorMessage(ERR_INCORRECT);
-        }
-      }
-    }, 1000);
-  };
-
-  const handleForgotPassword = (e) => {
-    e.preventDefault();
-    setErrorMessage('');
-    
-    if (!email) {
-      setErrorMessage("Please enter your email address to receive a reset link.");
-      return;
-    }
-    
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setSuccessMessage(MSG_RESET_SUCCESS);
-    }, 800);
+      // Route the user to the dashboard upon successful "login"
+      router.push('/dashboard');
+    }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-4 font-sans selection:bg-[#0D9488] selection:text-white">
+    <div className="min-h-screen flex font-sans bg-[#FFFFFF] text-[#0F172A]">
       
-      {/* Top Left Back Button */}
-      <div className="absolute top-6 left-6 md:top-10 md:left-10">
-        <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-[#0F172A] transition-colors font-medium text-sm group">
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Back to Website
-        </Link>
-      </div>
-
-      {/* Main Login Card */}
-      <div className="w-full max-w-[440px] bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-8 md:p-10">
+      {/* --- LEFT PANEL: BRANDING (Hidden on Mobile) --- */}
+      <div className="hidden lg:flex w-1/2 bg-[#0F172A] relative flex-col justify-between p-12 overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_top_left,rgba(13,148,136,0.4),transparent_50%)]"></div>
+        <div className="absolute bottom-0 right-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_bottom_right,rgba(13,148,136,0.4),transparent_50%)]"></div>
+        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#1E293B 1px, transparent 1px)', backgroundSize: '24px 24px', opacity: 0.3 }}></div>
         
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-extrabold text-[#0F172A] tracking-tight mb-3">SYNDEXUS</h1>
-          <p className="text-gray-500 font-medium">Secure Access to Export Workspace</p>
+        <div className="relative z-10">
+          <a href="/" className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm font-bold mb-12">
+            <ArrowLeft size={16} /> Back to Website
+          </a>
+          <div className="text-3xl font-extrabold text-white tracking-tight mb-2">SYNDEXUS</div>
+          <div className="w-12 h-1 bg-[#0D9488] mb-8"></div>
         </div>
 
-        {/* Global Error/Success Messages */}
-        {errorMessage && (
-          <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3">
-            <AlertCircle className="text-red-500 w-5 h-5 shrink-0 mt-0.5" />
-            <p className="text-sm font-medium text-red-800 leading-relaxed">{errorMessage}</p>
+        <div className="relative z-10 max-w-md">
+          <div className="w-12 h-12 bg-[#1E293B] rounded-xl flex items-center justify-center mb-6 border border-gray-700 text-[#0D9488]">
+            <ShieldCheck size={24} />
           </div>
-        )}
-
-        {successMessage && (
-          <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-100 flex items-start gap-3">
-            <CheckCircle className="text-[#10B981] w-5 h-5 shrink-0 mt-0.5" />
-            <p className="text-sm font-medium text-emerald-800 leading-relaxed">{successMessage}</p>
+          <h2 className="text-4xl font-bold text-white tracking-tight mb-4 leading-tight">
+            The Trust OS for Global Trade.
+          </h2>
+          <p className="text-lg text-gray-400 font-medium leading-relaxed mb-8">
+            Access your structured export ledger, manage compliance timelines, and coordinate with your customs broker in one secure environment.
+          </p>
+          
+          <div className="flex items-center gap-3 text-sm font-bold text-[#0D9488]">
+            <span>System Status: Fully Operational</span>
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0D9488] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0D9488]"></span>
+            </span>
           </div>
-        )}
+        </div>
+      </div>
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label className="block text-sm font-bold text-[#0F172A] mb-2" htmlFor="email">
-              Email Address
-            </label>
-            <input 
-              id="email"
-              type="email" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={isLocked || isLoading}
-              className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-[#0D9488] focus:ring-4 focus:ring-[#0D9488]/10 transition-all text-[#0F172A] font-medium placeholder-gray-400 disabled:opacity-50"
-              placeholder="name@organization.com"
-              required
-            />
-          </div>
+      {/* --- RIGHT PANEL: LOGIN FORM --- */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50/50">
+        <div className="max-w-md w-full">
+          
+          {/* Mobile Back Button */}
+          <a href="/" className="lg:hidden inline-flex items-center gap-2 text-[#334155] hover:text-[#0F172A] transition-colors text-sm font-bold mb-12">
+            <ArrowLeft size={16} /> Back to Website
+          </a>
 
-          <div>
-            <label className="block text-sm font-bold text-[#0F172A] mb-2" htmlFor="password">
-              Password
-            </label>
-            <input 
-              id="password"
-              type="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={isLocked || isLoading}
-              className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-[#0D9488] focus:ring-4 focus:ring-[#0D9488]/10 transition-all text-[#0F172A] font-medium placeholder-gray-400 disabled:opacity-50"
-              placeholder="••••••••"
-              required
-            />
+          <div className="mb-10 text-center lg:text-left">
+            <h1 className="text-3xl font-extrabold text-[#0F172A] tracking-tight mb-2">Welcome Back</h1>
+            <p className="text-[#334155] font-medium">Enter your credentials to access your workspace.</p>
           </div>
 
-          <div className="flex items-center justify-between pt-2">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input 
-                type="checkbox" 
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                disabled={isLocked}
-                className="w-4 h-4 rounded border-gray-300 text-[#0D9488] focus:ring-[#0D9488] disabled:opacity-50 cursor-pointer"
-              />
-              <span className="text-sm font-medium text-gray-600">Remember this device</span>
-            </label>
+          <form onSubmit={handleLogin} className="space-y-6">
             
+            {/* Email Input */}
+            <div>
+              <label className="block text-sm font-bold text-[#334155] mb-2">Corporate Email</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Mail size={18} className="text-gray-400" />
+                </div>
+                <input 
+                  type="email" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3 bg-[#FFFFFF] border border-[#E5E7EB] rounded-lg text-sm font-medium text-[#0F172A] outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/10 transition-all placeholder-gray-400 shadow-sm"
+                  placeholder="name@company.com"
+                />
+              </div>
+            </div>
+
+            {/* Password Input */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-bold text-[#334155]">Password</label>
+                <a href="#" className="text-xs font-bold text-[#0D9488] hover:underline">Forgot password?</a>
+              </div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Lock size={18} className="text-gray-400" />
+                </div>
+                <input 
+                  type="password" 
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3 bg-[#FFFFFF] border border-[#E5E7EB] rounded-lg text-sm font-medium text-[#0F172A] outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/10 transition-all placeholder-gray-400 shadow-sm"
+                  placeholder="••••••••••••"
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <button 
-              type="button"
-              onClick={handleForgotPassword}
-              className="text-sm font-bold text-[#0D9488] hover:text-teal-700 transition-colors"
+              type="submit" 
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-2 bg-[#0D9488] text-white py-3.5 rounded-lg font-bold text-sm hover:bg-[#0F172A] transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed mt-4"
             >
-              Forgot Password?
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Authenticating...
+                </>
+              ) : (
+                <>
+                  Sign In to Workspace <ArrowRight size={18} />
+                </>
+              )}
             </button>
+          </form>
+
+          {/* Footer Text */}
+          <div className="mt-10 text-center lg:text-left text-sm text-gray-500 font-medium">
+            Don't have an account? <button className="font-bold text-[#0F172A] hover:text-[#0D9488] transition-colors">Request Access</button>
           </div>
 
-          {/* MOCK reCAPTCHA BOX (Appears only after 3 failed attempts) */}
-          {showRecaptcha && (
-            <div className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl flex items-center justify-between mt-4 opacity-50 cursor-not-allowed">
-               <div className="flex items-center gap-3">
-                 <div className="w-6 h-6 border-2 border-gray-300 rounded bg-white"></div>
-                 <span className="text-sm font-medium text-gray-600">I'm not a robot</span>
-               </div>
-               <RefreshCcw size={20} className="text-gray-400" />
-            </div>
-          )}
-
-          <button 
-            type="submit" 
-            disabled={isLocked || isLoading}
-            className="w-full bg-[#0F172A] text-white py-4 rounded-xl font-bold text-[15px] hover:bg-[#0D9488] hover:shadow-lg hover:shadow-teal-900/20 active:scale-[0.98] transition-all duration-300 flex justify-center items-center gap-2 mt-4 disabled:opacity-50 disabled:hover:bg-[#0F172A] disabled:hover:shadow-none disabled:active:scale-100 disabled:cursor-not-allowed"
-          >
-            {isLoading ? (
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            ) : (
-              <>
-                <Lock size={16} className="opacity-80" /> Sign In
-              </>
-            )}
-          </button>
-        </form>
-
-        <div className="mt-10 text-center border-t border-gray-100 pt-8">
-          <p className="text-sm text-gray-500 font-medium">Need access?</p>
-          <button 
-            onClick={() => window.location.href = '/'}
-            className="mt-2 text-[15px] font-bold text-[#0F172A] hover:text-[#0D9488] transition-colors"
-          >
-            Request Organizational Account
-          </button>
         </div>
-
       </div>
-
-      {/* Security Footnote */}
-      <div className="mt-10 text-center">
-        <p className="text-xs text-gray-400 font-medium max-w-sm leading-relaxed">
-          Protected by AES-256 encryption. <br/>Session automatically expires after 30 minutes of inactivity.
-        </p>
-      </div>
-
     </div>
   );
 }

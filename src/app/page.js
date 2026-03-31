@@ -137,7 +137,6 @@ const SyndexusLanding = () => {
       
       phases.forEach((phase, index) => {
         const rect = phase.getBoundingClientRect();
-        // Determine which card is currently in the center of the screen
         if (rect.top <= window.innerHeight * 0.55 && rect.bottom >= window.innerHeight * 0.45) {
           current = index;
         }
@@ -172,8 +171,7 @@ const SyndexusLanding = () => {
   };
 
   return (
-    // overflow-clip ensures sticky positioning works properly without horizontal scrollbars
-    <div className="min-h-screen font-sans bg-[#FFFFFF] text-[#0F172A] overflow-clip relative">
+    <div className="min-h-screen font-sans bg-[#FFFFFF] text-[#0F172A] relative">
       
 
       {/* --- EARLY ACCESS MODAL --- */}
@@ -233,24 +231,6 @@ const SyndexusLanding = () => {
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes gradient-x {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        .animate-gradient-x {
-          animation: gradient-x 6s ease-in-out infinite;
-          background-size: 200% 200%;
-        }
-        .tilt-card {
-          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .tilt-card:hover {
-          transition: transform 0.1s ease-out;
-          z-index: 50;
-        }
-      `}} />
-
       {/* --- RESPONSIVE NAVIGATION BAR --- */}
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-xl saturate-150 z-50 border-b border-gray-100 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between">
@@ -271,35 +251,41 @@ const SyndexusLanding = () => {
                 Platform <ChevronDown size={14} className={`transition-transform duration-300 group-hover:rotate-180 ${isDesktopPlatformOpen ? 'rotate-180' : ''}`} />
               </div>
               
-              <div className={`absolute top-[90%] left-1/2 -translate-x-1/2 w-64 bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-200/50 overflow-hidden transition-all duration-300 origin-top transform group-hover:opacity-100 group-hover:scale-100 group-hover:visible ${isDesktopPlatformOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                <div className="flex flex-col p-2">
-                  <a href="#" className="p-3 hover:bg-orange-50 rounded-xl transition-colors group/item">
+              <div className={`absolute top-[90%] left-1/2 -translate-x-1/2 w-[340px] bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-200/50 overflow-hidden transition-all duration-300 origin-top transform group-hover:opacity-100 group-hover:scale-100 group-hover:visible ${isDesktopPlatformOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+                <div className="flex flex-col p-3 gap-1">
+                  
+                  <a href="#" className="p-3 hover:bg-orange-50 rounded-xl transition-colors group/item flex flex-col">
                     <div className="flex items-center gap-3 mb-1">
                       <div className="w-2 h-2 rounded-full bg-[#F59E0B]"></div>
                       <span className="font-bold text-[#0F172A] group-hover/item:text-[#F59E0B] transition-colors">Shipment Governance</span>
                     </div>
+                    <p className="text-xs text-gray-500 pl-5 leading-relaxed group-hover/item:text-gray-700">Capture and preserve structured shipment data from day one.</p>
                   </a>
                   
-                  <a href="#" className="p-3 hover:bg-cyan-50 rounded-xl transition-colors group/item">
+                  <a href="#" className="p-3 hover:bg-cyan-50 rounded-xl transition-colors group/item flex flex-col">
                     <div className="flex items-center gap-3 mb-1">
                       <div className="w-2 h-2 rounded-full bg-[#06B6D4]"></div>
                       <span className="font-bold text-[#0F172A] group-hover/item:text-[#06B6D4] transition-colors">Documentation Control</span>
                     </div>
+                    <p className="text-xs text-gray-500 pl-5 leading-relaxed group-hover/item:text-gray-700">Generate standardized commercial invoices and packing lists.</p>
                   </a>
                   
-                  <a href="#" className="p-3 hover:bg-emerald-50 rounded-xl transition-colors group/item">
+                  <a href="#" className="p-3 hover:bg-emerald-50 rounded-xl transition-colors group/item flex flex-col">
                     <div className="flex items-center gap-3 mb-1">
                       <div className="w-2 h-2 rounded-full bg-[#10B981]"></div>
                       <span className="font-bold text-[#0F172A] group-hover/item:text-[#10B981] transition-colors">Realization Monitoring</span>
                     </div>
+                    <p className="text-xs text-gray-500 pl-5 leading-relaxed group-hover/item:text-gray-700">Track export realization deadlines and compliance timelines.</p>
                   </a>
 
-                  <a href="#" className="p-3 hover:bg-gray-50 rounded-xl transition-colors group/item">
+                  <a href="#" className="p-3 hover:bg-gray-50 rounded-xl transition-colors group/item flex flex-col">
                     <div className="flex items-center gap-3 mb-1">
                       <div className="w-2 h-2 rounded-full bg-[#0F172A]"></div>
                       <span className="font-bold text-[#0F172A] group-hover/item:text-[#0F172A] transition-colors">Access Management</span>
                     </div>
+                    <p className="text-xs text-gray-500 pl-5 leading-relaxed group-hover/item:text-gray-700">Secure role-based controls for teams and customs brokers.</p>
                   </a>
+
                 </div>
               </div>
             </div>
@@ -349,7 +335,7 @@ const SyndexusLanding = () => {
           </div>
           
           <div className="flex items-center gap-6 z-50">
-            <a href="/login" className="hidden sm:block text-sm font-bold text-[#0F172A] hover:text-[#0D9488] transition-colors">
+            <a href="/login" className="text-sm font-bold text-[#0F172A] hover:text-[#0D9488] transition-colors">
               Login
             </a>
             
@@ -361,7 +347,7 @@ const SyndexusLanding = () => {
             </button>
 
             <button 
-              className="lg:hidden text-[#0F172A] p-1"
+              className="lg:hidden text-[#0F172A] "
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -369,58 +355,130 @@ const SyndexusLanding = () => {
           </div>
         </div>
 
-        {/* MOBILE MENU OVERLAY */}
-        <div className={`lg:hidden fixed inset-0 top-16 bg-white/95 backdrop-blur-3xl transition-all duration-300 ease-in-out overflow-y-auto ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
-          <div className="flex flex-col px-6 pt-10 pb-20 space-y-6 text-xl font-bold text-[#0F172A]">
-            
-            {/* MOBILE PLATFORM ACCORDION */}
-            <div>
-              <button 
-                onClick={() => setIsMobilePlatformOpen(!isMobilePlatformOpen)}
-                className="flex w-full justify-between items-center border-b border-gray-100 pb-4"
-              >
-                Platform <ChevronDown size={20} className={`text-gray-400 transition-transform duration-300 ${isMobilePlatformOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <div className={`flex flex-col gap-2 overflow-hidden transition-all duration-300 ${isMobilePlatformOpen ? 'max-h-[400px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><div className="w-2 h-2 rounded-full bg-[#F59E0B]"></div><span className="text-lg">Shipment Governance</span></a>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><div className="w-2 h-2 rounded-full bg-[#06B6D4]"></div><span className="text-lg">Documentation Control</span></a>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><div className="w-2 h-2 rounded-full bg-[#10B981]"></div><span className="text-lg">Realization Monitoring</span></a>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><div className="w-2 h-2 rounded-full bg-[#0F172A]"></div><span className="text-lg">Access Management</span></a>
-              </div>
-            </div>
+        {/* MOBILE MENU OVERLAY - UPDATED WITH Z-INDEX AND OBVIOUS LOGIN BUTTON */}
+        <div
+  className={`lg:hidden fixed top-0 left-0 w-full h-screen z-[9999] bg-white transition-all duration-300 ${
+    isMobileMenuOpen
+      ? "opacity-100 visible"
+      : "opacity-0 invisible"
+  }`}
+>
+  <div className="flex flex-col px-6 pt-10 pb-20 space-y-6 text-xl font-bold text-[#0F172A]">
+    <div className="flex items-center justify-between mb-8">
+    <h2 className="text-xl font-bold text-[#0F172A]">Menu</h2>
 
-            {/* MOBILE TOOLS ACCORDION */}
-            <div>
-              <button 
-                onClick={() => setIsMobileToolsOpen(!isMobileToolsOpen)}
-                className="flex w-full justify-between items-center border-b border-gray-100 pb-4"
-              >
-                Tools <ChevronDown size={20} className={`text-gray-400 transition-transform duration-300 ${isMobileToolsOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <div className={`flex flex-col gap-2 overflow-hidden transition-all duration-300 ${isMobileToolsOpen ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><span className="text-lg">HS Code Finder</span></a>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><span className="text-lg">Duty Calculator</span></a>
-              </div>
-            </div>
+    <button
+      onClick={() => setIsMobileMenuOpen(false)}
+      className="p-2 rounded-lg hover:bg-gray-100 transition"
+    >
+      <X size={24} />
+    </button>
+  </div>
+    {/* PLATFORM */}
+    <div>
+      <button
+        onClick={() => setIsMobilePlatformOpen(!isMobilePlatformOpen)}
+        className="flex w-full justify-between items-center border-b border-gray-100 pb-4"
+      >
+        Platform
+        <ChevronDown
+          size={20}
+          className={`transition-transform ${
+            isMobilePlatformOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
 
-            {/* MOBILE COMPANY ACCORDION */}
-            <div>
-              <button 
-                onClick={() => setIsMobileCompanyOpen(!isMobileCompanyOpen)}
-                className="flex w-full justify-between items-center border-b border-gray-100 pb-4"
-              >
-                Company <ChevronDown size={20} className={`text-gray-400 transition-transform duration-300 ${isMobileCompanyOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <div className={`flex flex-col gap-2 overflow-hidden transition-all duration-300 ${isMobileCompanyOpen ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><span className="text-lg">About</span></a>
-                <a href="#" className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"><span className="text-lg">Contact</span></a>
-              </div>
-            </div>
-
-            <a href="/login" className="border-b border-gray-100 pb-4 text-[#0D9488]">Login</a>
-          </div>
+      {isMobilePlatformOpen && (
+        <div className="mt-4 space-y-3">
+          <a href="#" className="block p-4 bg-gray-50 rounded-xl">
+            Shipment Governance
+          </a>
+          <a href="#" className="block p-4 bg-gray-50 rounded-xl">
+            Documentation Control
+          </a>
+          <a href="#" className="block p-4 bg-gray-50 rounded-xl">
+            Realization Monitoring
+          </a>
         </div>
+      )}
+    </div>
+
+    {/* TOOLS */}
+    <div>
+      <button
+        onClick={() => setIsMobileToolsOpen(!isMobileToolsOpen)}
+        className="flex w-full justify-between items-center border-b border-gray-100 pb-4"
+      >
+        Tools
+        <ChevronDown
+          size={20}
+          className={`transition-transform ${
+            isMobileToolsOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {isMobileToolsOpen && (
+        <div className="mt-4 space-y-3">
+          <a href="#" className="block p-4 bg-gray-50 rounded-xl">
+            HS Code Finder
+          </a>
+          <a href="#" className="block p-4 bg-gray-50 rounded-xl">
+            Duty Calculator
+          </a>
+        </div>
+      )}
+    </div>
+
+    {/* COMPANY */}
+    <div>
+      <button
+        onClick={() => setIsMobileCompanyOpen(!isMobileCompanyOpen)}
+        className="flex w-full justify-between items-center border-b border-gray-100 pb-4"
+      >
+        Company
+        <ChevronDown
+          size={20}
+          className={`transition-transform ${
+            isMobileCompanyOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {isMobileCompanyOpen && (
+        <div className="mt-4 space-y-3">
+          <a href="#" className="block p-4 bg-gray-50 rounded-xl">
+            About
+          </a>
+          <a href="#" className="block p-4 bg-gray-50 rounded-xl">
+            Contact
+          </a>
+        </div>
+      )}
+    </div>
+
+    {/* LOGIN BUTTON */}
+    <div className="pt-6 border-t">
+      <a
+        href="/login"
+        onClick={() => setIsMobileMenuOpen(false)}
+        className="block w-full text-center bg-[#0F172A] text-white py-4 rounded-xl text-lg font-bold"
+      >
+        Login to Dashboard
+      </a>
+    </div>
+  </div>
+</div>
       </nav>
+      <div className="pt-6 border-t border-gray-200">
+  <button
+    onClick={() => setIsMobileMenuOpen(false)}
+    className="w-full text-center text-red-500 font-bold py-3 rounded-lg hover:bg-red-50 transition"
+  >
+    Exit Menu
+  </button>
+</div>
 
       {/* --- HERO SECTION --- */}
       <header className="relative flex flex-col items-center justify-center text-center px-4 pt-40 pb-24 min-h-[90vh] overflow-hidden">
@@ -462,7 +520,7 @@ const SyndexusLanding = () => {
 
       {/* --- THE CORE EXPERIENCE: STICKY SCROLL --- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 flex flex-col md:flex-row items-start relative">
-        <div className="w-full md:w-1/2 md:pr-16 pb-12 md:pb-16">
+        <div className="w-full md:w-1/2 md:pr-16 pb-12 md:pb-16 relative z-20">
           
           {/* Phase 0: Shipment Governance */}
           <div className="scroll-phase min-h-[50vh] md:min-h-[90vh] flex flex-col justify-center perspective-[2000px] mb-12 md:mb-0">
@@ -520,10 +578,9 @@ const SyndexusLanding = () => {
 
         </div>
 
-        {/* Sticky Globe Container */}
-        <div className="hidden md:flex w-1/2 sticky top-24 h-[calc(100vh-8rem)] items-center justify-center">
-          <div className="absolute inset-10 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.03),transparent_70%)] rounded-[3rem] blur-2xl"></div>
-          <div className="w-full h-full bg-[#FAFAFA] rounded-[3rem] border border-gray-100 flex items-center justify-center relative overflow-hidden shadow-2xl z-10 transition-colors duration-1000">
+        {/* Sticky Globe Container - Shifted right on desktop */}
+        <div className="flex w-full md:w-1/2 sticky top-24 h-[40vh] md:h-[calc(100vh-8rem)] items-center justify-center md:justify-end z-0 md:z-10 order-first md:order-last mb-8 md:mb-0">
+          <div className="w-full h-full flex items-center justify-center md:justify-end relative overflow-visible transition-colors duration-1000 scale-125 md:scale-[1.2] lg:scale-[1.3] md:translate-x-10 lg:translate-x-16">
             <VideoGlobe activePhase={activePhase} />
           </div>
         </div>
@@ -589,47 +646,36 @@ const SyndexusLanding = () => {
         </div>
       </section>
 
-      {/* --- SECURITY & GOVERNANCE SECTION --- */}
+      {/* --- SECURITY & GOVERNANCE SECTION (Redesigned) --- */}
       <section className="py-24 md:py-32 bg-[#0F172A] text-white border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
-          <div className="w-full md:w-1/2">
-            <RevealOnScroll>
-              <div className="w-16 h-16 bg-[#1E293B] rounded-2xl flex items-center justify-center mb-8 border border-gray-700 text-[#0D9488]">
-                <ShieldCheck size={32} />
-              </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-8 text-white">
-                Built with Institutional Controls.
-              </h2>
-              
-              <ul className="space-y-6 text-gray-300 font-medium text-xl">
-                <li className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><Lock size={16} className="text-teal-400" /></div>
-                  Role-Based Access Control
-                </li>
-                <li className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><Activity size={16} className="text-teal-400" /></div>
-                  Immutable Event Logging
-                </li>
-                <li className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><Server size={16} className="text-teal-400" /></div>
-                  Secure Document Storage
-                </li>
-                <li className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><ShieldCheck size={16} className="text-teal-400" /></div>
-                  Segregated Financial Visibility
-                </li>
-              </ul>
-            </RevealOnScroll>
-          </div>
-          
-          <div className="w-full md:w-1/2 bg-[#1E293B] border border-gray-700 p-8 md:p-12 rounded-[2rem]">
-             <RevealOnScroll delay={200}>
-               <h3 className="text-2xl font-bold text-white mb-4">Platform Disclaimer</h3>
-               <p className="text-gray-400 leading-relaxed text-lg">
-                 Syndexus is a technology platform for structured export workflow management. <strong className="text-white">It does not act as a bank, customs broker, or licensed financial intermediary.</strong>
-               </p>
-             </RevealOnScroll>
-          </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center md:text-left">
+          <RevealOnScroll>
+            <div className="w-16 h-16 bg-[#1E293B] rounded-2xl flex items-center justify-center mb-8 border border-gray-700 text-[#0D9488] mx-auto md:mx-0">
+              <ShieldCheck size={32} />
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-12 text-white">
+              Built with Institutional Controls.
+            </h2>
+            
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 text-gray-300 font-medium text-lg">
+              <li className="flex items-center gap-4 justify-center md:justify-start">
+                <div className="w-10 h-10 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><Lock size={18} className="text-teal-400" /></div>
+                Role-Based Access Control
+              </li>
+              <li className="flex items-center gap-4 justify-center md:justify-start">
+                <div className="w-10 h-10 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><Activity size={18} className="text-teal-400" /></div>
+                Immutable Event Logging
+              </li>
+              <li className="flex items-center gap-4 justify-center md:justify-start">
+                <div className="w-10 h-10 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><Server size={18} className="text-teal-400" /></div>
+                Secure Document Storage
+              </li>
+              <li className="flex items-center gap-4 justify-center md:justify-start">
+                <div className="w-10 h-10 rounded-full bg-teal-900/50 flex items-center justify-center border border-teal-800 shrink-0"><ShieldCheck size={18} className="text-teal-400" /></div>
+                Segregated Financial Visibility
+              </li>
+            </ul>
+          </RevealOnScroll>
         </div>
       </section>
 
@@ -666,8 +712,14 @@ const SyndexusLanding = () => {
               </ul>
             </div>
           </div>
-          <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-gray-200 flex flex-col items-center justify-center text-xs md:text-sm text-gray-400 font-medium text-center">
-            <p>&copy; 2026 Syndexus Infrastructure Pvt Ltd. All rights reserved.</p>
+          
+          <div className="max-w-7xl mx-auto px-6 pt-10 border-t border-gray-200 flex flex-col items-center justify-center text-center">
+            <div className="mb-6 max-w-3xl">
+               <p className="text-xs text-gray-500 leading-relaxed">
+                 <strong className="text-gray-700 font-bold">Platform Disclaimer:</strong> Syndexus is a technology platform for structured export workflow management. <strong className="text-gray-700 font-bold">It does not act as a bank, customs broker, or licensed financial intermediary.</strong>
+               </p>
+            </div>
+            <p className="text-xs md:text-sm text-gray-400 font-medium">&copy; 2026 Syndexus Infrastructure Pvt Ltd. All rights reserved.</p>
           </div>
         </RevealOnScroll>
       </footer>
