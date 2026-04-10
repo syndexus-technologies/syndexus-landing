@@ -1,5 +1,5 @@
 'use client';
-import  { useRouter } from 'next/navigation';
+
 import React, { useEffect, useRef } from 'react';
 import createGlobe from 'cobe';
 

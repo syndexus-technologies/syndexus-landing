@@ -4,8 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, CheckCircle, ArrowRight, ShieldCheck, FileText, Globe, Clock, Lock, Server, Activity, X, Menu } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import VideoGlobe from '../components/ThreeGlobe';
-
-
+import Image from "next/image";
 // --- EFFECT 1: Masked Text Reveal ---
 const MaskedReveal = ({ children, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -101,10 +100,10 @@ const SyndexusLanding = () => {
     };
 
     emailjs.send(
-      'YOUR_SERVICE_ID',    // Replace with your EmailJS Service ID
-      'YOUR_TEMPLATE_ID',   // Replace with your EmailJS Template ID
+      'service_z5vyaht',    // Replace with your EmailJS Service ID
+      'template_y5texhr',   // Replace with your EmailJS Template ID
       templateParams,
-      'YOUR_PUBLIC_KEY'     // Replace with your EmailJS Public Key
+      '-HHfOYBmRZU8swRXv'     // Replace with your EmailJS Public Key
     )
     .then((response) => {
       console.log('SUCCESS!', response.status, response.text);
@@ -171,9 +170,11 @@ const SyndexusLanding = () => {
   };
 
   return (
-    <div className="min-h-screen font-sans bg-[#FFFFFF] text-[#0F172A] relative">
+    <div className="min-h-screen font-sans bg-[#FFFFFF] text-[#0F172A] overflow-clip relative">
+  
+    
+    
       
-
       {/* --- EARLY ACCESS MODAL --- */}
       <div className={`fixed inset-0 z-[100] flex items-center justify-center transition-all duration-500 ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
         <div 
@@ -235,9 +236,17 @@ const SyndexusLanding = () => {
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-xl saturate-150 z-50 border-b border-gray-100 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2 hover:opacity-80 transition z-50">
+          <div className="flex items-center gap-2">
+  <Image
+    src="/logo.jpeg"
+    alt="Syndexus Logo"
+    width={28}
+    height={28}
+  />
             <span className="text-xl md:text-2xl font-extrabold text-[#0F172A] tracking-tight">
               SYNDEXUS
             </span>
+            </div>
           </a>
           
           <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">

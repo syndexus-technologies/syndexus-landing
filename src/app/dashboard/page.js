@@ -1,7 +1,8 @@
 'use client';
-import  { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { Bell, User, Plus, Upload, CheckCircle, FileText, ChevronDown, X, LogOut } from 'lucide-react';
+import Image from "next/image";
 
 export default function SyndexusDashboard() {
   const router = useRouter();
@@ -163,7 +164,15 @@ export default function SyndexusDashboard() {
 
       {/* --- SIDEBAR (240px Fixed, No Icons) --- */}
       <aside className="w-[240px] border-r border-[#E5E7EB] bg-[#FFFFFF] shrink-0 hidden md:flex flex-col z-20">
-        <div className="h-[72px] flex items-center px-6 border-b border-[#E5E7EB] shrink-0">
+        <div className="h-[72px] flex items-center px-6 border-b border-[#E5E7EB] shrink-0 gap-3">
+          {/* DESKTOP SIDEBAR LOGO */}
+          <Image 
+            src="/logo.jpeg" 
+            alt="Syndexus Logo" 
+            width={28} 
+            height={28} 
+            className="object-contain"
+          />
           <span className="text-xl font-extrabold text-[#0F172A] tracking-tight">SYNDEXUS</span>
         </div>
         
@@ -194,10 +203,22 @@ export default function SyndexusDashboard() {
       <main className="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50/30">
         
         {/* --- TOP BAR (72px) --- */}
-        <header className="h-[72px] border-b border-[#E5E7EB] bg-[#FFFFFF] px-8 flex items-center justify-between shrink-0 z-10">
-          <h1 className="text-lg font-bold text-[#0F172A]">Dashboard</h1>
+        <header className="h-[72px] border-b border-[#E5E7EB] bg-[#FFFFFF] px-6 md:px-8 flex items-center justify-between shrink-0 z-10">
+          <div className="flex items-center gap-3">
+            {/* MOBILE TOP BAR LOGO (Hidden on Desktop) */}
+            <div className="md:hidden flex items-center">
+              <Image 
+                src="/logo.png" 
+                alt="Syndexus Logo" 
+                width={24} 
+                height={24} 
+                className="object-contain"
+              />
+            </div>
+            <h1 className="text-lg font-bold text-[#0F172A]">Dashboard</h1>
+          </div>
           
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             {/* Role Switcher */}
             <div className="hidden lg:flex items-center gap-2 border border-[#E5E7EB] rounded px-3 py-1.5 bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors">
               <div className="text-xs text-[#334155]">
@@ -208,7 +229,7 @@ export default function SyndexusDashboard() {
 
             <div className="w-px h-6 bg-[#E5E7EB] hidden md:block"></div>
 
-            <button className="text-[#334155] hover:text-[#0F172A] relative">
+            <button className="text-[#334155] hover:text-[#0F172A] relative hidden sm:block">
               <Bell size={20} />
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#FEE2E2] border-2 border-white rounded-full"></span>
             </button>
@@ -218,7 +239,7 @@ export default function SyndexusDashboard() {
             
             {/* Logout Button */}
             <button onClick={() => router.push('/login')} 
-            className="flex items-center gap-2 text-sm font-bold text-[#334155] hover:text-[#EF4444] transition-colors ml-2 border-l border-[#E5E7EB] pl-6">
+            className="flex items-center gap-2 text-sm font-bold text-[#334155] hover:text-[#EF4444] transition-colors ml-1 md:ml-2 border-l border-[#E5E7EB] pl-4 md:pl-6">
               <LogOut size={18} />
               <span className="hidden md:inline">Logout</span>
             </button>
@@ -226,18 +247,18 @@ export default function SyndexusDashboard() {
         </header>
 
         {/* --- SCROLLABLE DASHBOARD CONTENT --- */}
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8">
           <div className="max-w-6xl mx-auto space-y-8">
             
             {/* Header & Actions */}
-            <div className="flex justify-between items-end">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
               <div>
                 <h2 className="text-2xl font-bold text-[#0F172A] mb-1">Overview</h2>
                 <p className="text-sm text-[#334155]">Track your ongoing shipments and compliance deadlines.</p>
               </div>
               <button 
                 onClick={() => setIsNewShipmentModalOpen(true)}
-                className="bg-[#0D9488] text-white px-5 py-2.5 rounded font-bold text-sm hover:bg-[#0F172A] transition-colors flex items-center gap-2 shadow-sm"
+                className="bg-[#0D9488] text-white px-5 py-2.5 rounded font-bold text-sm hover:bg-[#0F172A] transition-colors flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto"
               >
                 <Plus size={16} /> New Shipment
               </button>
@@ -281,7 +302,7 @@ export default function SyndexusDashboard() {
               </div>
               
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+                <table className="w-full text-left border-collapse min-w-[800px]">
                   <thead className="bg-gray-50 border-b border-[#E5E7EB]">
                     <tr>
                       <th className="px-5 py-3 text-xs font-bold text-[#334155] uppercase tracking-wider">Shipment ID</th>

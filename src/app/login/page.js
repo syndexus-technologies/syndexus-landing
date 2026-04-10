@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Mail, Lock, ShieldCheck, ArrowRight } from 'lucide-react';
+import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -37,7 +38,20 @@ export default function LoginPage() {
           <a href="/" className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm font-bold mb-12">
             <ArrowLeft size={16} /> Back to Website
           </a>
-          <div className="text-3xl font-extrabold text-white tracking-tight mb-2">SYNDEXUS</div>
+          
+          {/* --- DESKTOP LOGO ADDED HERE --- */}
+          <div className="flex items-center gap-3 mb-4">
+            {/* Make sure your logo is inside the /public folder and update the src path below */}
+            <Image 
+              src="/logo.png" 
+              alt="Syndexus Logo" 
+              width={40} 
+              height={40} 
+              className="object-contain"
+            />
+            <div className="text-3xl font-extrabold text-white tracking-tight">SYNDEXUS</div>
+          </div>
+          
           <div className="w-12 h-1 bg-[#0D9488] mb-8"></div>
         </div>
 
@@ -67,9 +81,22 @@ export default function LoginPage() {
         <div className="max-w-md w-full">
           
           {/* Mobile Back Button */}
-          <a href="/" className="lg:hidden inline-flex items-center gap-2 text-[#334155] hover:text-[#0F172A] transition-colors text-sm font-bold mb-12">
+          <a href="/" className="lg:hidden inline-flex items-center gap-2 text-[#334155] hover:text-[#0F172A] transition-colors text-sm font-bold mb-8">
             <ArrowLeft size={16} /> Back to Website
           </a>
+
+          {/* --- MOBILE LOGO ADDED HERE --- */}
+          <div className="lg:hidden flex items-center justify-center gap-3 mb-10">
+            {/* Make sure your logo is inside the /public folder and update the src path below */}
+            <Image 
+              src="/logo.jpeg" 
+              alt="Syndexus Logo" 
+              width={36} 
+              height={36} 
+              className="object-contain"
+            />
+            <span className="text-2xl font-extrabold text-[#0F172A] tracking-tight">SYNDEXUS</span>
+          </div>
 
           <div className="mb-10 text-center lg:text-left">
             <h1 className="text-3xl font-extrabold text-[#0F172A] tracking-tight mb-2">Welcome Back</h1>
