@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { Bell, User, Plus, Upload, CheckCircle, FileText, ChevronDown, X, LogOut } from 'lucide-react';
 import Image from "next/image";
+import { createShipment, getShipments } from '@/lib/api';
 
 export default function SyndexusDashboard() {
   const router = useRouter();
@@ -42,20 +43,45 @@ export default function SyndexusDashboard() {
     }, 1500);
   };
 
-  const handleConfirmShipment = () => {
-    const newShipment = {
-      id: `SHP-${Math.floor(10000 + Math.random() * 90000)}`,
-      buyer: ocrData.buyer,
-      country: 'United Kingdom', // Defaulted for mock
-      value: `$${parseInt(ocrData.value).toLocaleString()}`,
-      status: 'Created',
-      blUploaded: 'No',
-      deadline: 'Pending BL'
+ const handleConfirmShipment = async () => {
+  try {
+    setIsProcessing(true);
+
+    // This matches what the backend's CreateShipmentDto expects
+    const payload = {
+      buyerName: ocrData.buyer,
+      invoiceNumber: ocrData.invoiceNumber,
+      invoiceDate: ocrData.date,
+      invoiceValue: parseFloat(ocrData.value),
+      currency: ocrData.currency,
+      hsCode: ocrData.hsCode,
+      productDescription: ocrData.product,
     };
+
+    const response = await createShipment(payload);
+
+    // Add the real shipment from backend to the table
+    const created = response.data;
+    const newShipment = {
+      id: created.id,
+      buyer: created.buyerName,
+      country: created.buyerCountry || '—',
+      value: `$${created.invoiceValue?.toLocaleString()}`,
+      status: created.status,
+      blUploaded: created.blNumber ? 'Yes' : 'No',
+      deadline: created.blUploadedAt ? 'Set' : 'Pending BL',
+    };
+
     setShipments([newShipment, ...shipments]);
     setIsNewShipmentModalOpen(false);
     setOcrStep(1);
-  };
+
+  } catch (error) {
+    alert(`Error: ${error.message}`);
+  } finally {
+    setIsProcessing(false);
+  }
+};
 
   // --- UI HELPERS ---
   const getStatusBadge = (status) => {
