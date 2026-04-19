@@ -39,20 +39,33 @@ export default function LoginPage() {
             <ArrowLeft size={16} /> Back to Website
           </a>
           
-          {/* --- DESKTOP LOGO ADDED HERE --- */}
           <div className="flex items-center gap-3 mb-4">
-            {/* Make sure your logo is inside the /public folder and update the src path below */}
             <Image 
               src="/logo.png" 
               alt="Syndexus Logo" 
               width={40} 
               height={40} 
               className="object-contain"
+              unoptimized={true}
             />
             <div className="text-3xl font-extrabold text-white tracking-tight">SYNDEXUS</div>
           </div>
           
           <div className="w-12 h-1 bg-[#0D9488] mb-8"></div>
+        </div>
+
+        {/* --- NEW: CENTER GLOBE IMAGE --- */}
+        {/* Expanded to fill the available space even more */}
+        <div className="relative z-10 flex-1 flex items-center justify-center w-full py-4 pointer-events-none">
+          <div className="relative w-full h-full min-h-[300px] max-h-[600px] 2xl:max-h-[750px] opacity-90 transition-transform duration-1000 hover:scale-105">
+            <Image 
+              src="/globes.jpg" 
+              alt="Global Trade Network" 
+              fill
+              className="object-contain drop-shadow-[0_0_60px_rgba(13,148,136,0.15)]"
+              unoptimized={true}
+            />
+          </div>
         </div>
 
         <div className="relative z-10 max-w-md">
@@ -85,15 +98,15 @@ export default function LoginPage() {
             <ArrowLeft size={16} /> Back to Website
           </a>
 
-          {/* --- MOBILE LOGO ADDED HERE --- */}
+          {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-3 mb-10">
-            {/* Make sure your logo is inside the /public folder and update the src path below */}
             <Image 
-              src="/logo.jpeg" 
+              src="/logo.png" 
               alt="Syndexus Logo" 
               width={36} 
               height={36} 
               className="object-contain"
+              unoptimized={true}
             />
             <span className="text-2xl font-extrabold text-[#0F172A] tracking-tight">SYNDEXUS</span>
           </div>
